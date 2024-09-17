@@ -1,19 +1,33 @@
-const loadPhone = async (searchText) => {
+const loadPhone = async (searchText, isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
   const data = await res.json();
   const phones = data.data;
   //   console.log(data);
-  displayPhones(phones);
+  displayPhones(phones, isShowAll);
 };
 
-const displayPhones = (phones) => {
+const displayPhones = (phones, isShowAll) => {
   //   console.log(phones);
   //> 1 get korlam jekhane amra data gula dekhabo sey id k nilam
   const phoneContainer = document.getElementById("phone-container");
   //> display clear after new search
   phoneContainer.textContent = "";
+  //> show more then 12 phones in this button
+  const showAllContainer = document.getElementById("show-all-container");
+
+  if (phones.length > 12 && !isShowAll) {
+    showAllContainer.classList.remove("hidden");
+  } else {
+    showAllContainer.classList.add("hidden");
+  }
+  console.log("isShowAll :>> ", isShowAll);
+  //> display first 12 phones
+  if (!isShowAll) {
+    phones = phones.slice(0, 12);
+  }
+
   phones.forEach((phone) => {
     console.log(phone);
     //> 2 create a div
@@ -42,13 +56,33 @@ const displayPhones = (phones) => {
     //> 4 appendChild
     phoneContainer.appendChild(phoneCard);
   });
-};
 
-const handelSearch = () => {
+  //> hide loading spinner
+  toggleLoadingSpinner(false);
+};
+//str handelSearch
+const handelSearch = (isShowAll) => {
+  toggleLoadingSpinner(true);
   const searchField = document.getElementById("search-field");
   const searchText = searchField.value;
   // console.log(searchText);
-  loadPhone(searchText);
+  loadPhone(searchText, isShowAll);
 };
 
+//str handelSearch recap
+
+const toggleLoadingSpinner = (isLoading) => {
+  const loadingSpinner = document.getElementById("loading-spinner");
+  if (isLoading) {
+    loadingSpinner.classList.remove("hidden");
+  } else {
+    loadingSpinner.classList.add("hidden");
+  }
+};
+
+// str show all btn handelar
+
+const handleShowAll = () => {
+  handelSearch(true);
+};
 // loadPhone();

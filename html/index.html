@@ -56,6 +56,7 @@
     </header>
 
     <main>
+      
       <section class="bg-gray-100 m-4 p-4">
         <label class="input input-bordered flex items-center gap-2">
           <input
@@ -83,6 +84,14 @@
           id="phone-container"
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
         ></div>
+        <div id="show-all-container" class="hidden text-center my-8">
+          <button onclick="handleShowAll()" class="btn btn-accent">show more</button>
+        </div>
+      </section>
+     
+        <div id="loading-spinner" class="text-center hidden">
+          <span class="loading loading-bars loading-lg"></span>
+        </div>
       </section>
     </main>
     <footer>
