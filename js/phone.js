@@ -1,4 +1,4 @@
-const loadPhone = async (searchText, isShowAll) => {
+const loadPhone = async (searchText = 13, isShowAll) => {
   const res = await fetch(
     `https://openapi.programming-hero.com/api/phones?search=${searchText}`
   );
@@ -61,14 +61,29 @@ const displayPhones = (phones, isShowAll) => {
 
 //
 const handleShowDetail = async (id) => {
-  console.log("show details", id);
+  // console.log("show details", id);
   //? load single phone data
   const res = await fetch(
     // `https://openapi.programing-hero.com/api/phone/${id}`
     `https://openapi.programming-hero.com/api/phone/${id}`
   );
   const data = await res.json();
+  const phone = data.data;
   console.log(data);
+  showPhoneDetails(phone);
+};
+
+const showPhoneDetails = (phone) => {
+  console.log(phone);
+  const phoneName = document.getElementById("show-detail-phone-name");
+  phoneName.innerText = phone.name;
+  const showDetailContainer = document.getElementById("show-detail-container");
+  showDetailContainer.innerHTML = `
+    <img src ='${phone.image}' alt="" />;
+    <p> <span> storage </span> ${phone?.mainFeatures?.storage} </p>;
+<p><span>Gps</span> ${phone?.others?.GPS} </p>;
+  `;
+  show_details_modal.showModal();
 };
 
 //str handelSearch
@@ -96,4 +111,4 @@ const toggleLoadingSpinner = (isLoading) => {
 const handleShowAll = () => {
   handelSearch(true);
 };
-// loadPhone();
+loadPhone();
