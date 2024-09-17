@@ -22,14 +22,14 @@ const displayPhones = (phones, isShowAll) => {
   } else {
     showAllContainer.classList.add("hidden");
   }
-  console.log("isShowAll :>> ", isShowAll);
+  // console.log("isShowAll :>> ", isShowAll);
   //> display first 12 phones
   if (!isShowAll) {
     phones = phones.slice(0, 12);
   }
 
   phones.forEach((phone) => {
-    console.log(phone);
+    // console.log(phone);
     //> 2 create a div
     const phoneCard = document.createElement("div");
     phoneCard.classList = `card bg-gray-100 w-96 shadow-xl`;
@@ -48,9 +48,7 @@ const displayPhones = (phones, isShowAll) => {
         </h2>
         <p>If a dog chews shoes whose shoes does he choose?</p>
         <div class="card-actions justify-end">
-        <div class="badge badge-outline">Fashion</div>
-        <div class="badge badge-outline">Products</div>
-        </div>
+       <button onClick='handleShowDetail("${phone.slug}")' class="btn btn-warning">Show Details</button>
     </div>
     `;
     //> 4 appendChild
@@ -60,6 +58,19 @@ const displayPhones = (phones, isShowAll) => {
   //> hide loading spinner
   toggleLoadingSpinner(false);
 };
+
+//
+const handleShowDetail = async (id) => {
+  console.log("show details", id);
+  //? load single phone data
+  const res = await fetch(
+    // `https://openapi.programing-hero.com/api/phone/${id}`
+    `https://openapi.programming-hero.com/api/phone/${id}`
+  );
+  const data = await res.json();
+  console.log(data);
+};
+
 //str handelSearch
 const handelSearch = (isShowAll) => {
   toggleLoadingSpinner(true);
