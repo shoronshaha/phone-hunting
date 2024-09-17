@@ -81,7 +81,7 @@ const showPhoneDetails = (phone) => {
   showDetailContainer.innerHTML = `
     <img src ='${phone.image}' alt="" />;
     <p> <span> storage </span> ${phone?.mainFeatures?.storage} </p>;
-<p><span>Gps</span> ${phone?.others?.GPS} </p>;
+<p><span>Gps</span> ${phone?.others?.GPS || "NO GPS Available"} </p>;
   `;
   show_details_modal.showModal();
 };
